@@ -1,3 +1,8 @@
+<picture>
+  <source srcset="cover.webp" type="image/webp">
+  <img src="cover.webp" alt="Обложка учебного пособия" width="100%">
+</picture>
+
 # Учебное пособие: Эффективная работа с AI-агентами
 
 ## О материале
