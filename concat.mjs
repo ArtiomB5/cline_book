@@ -13,7 +13,9 @@ const chapters = await Promise.all(
 
 const output = [readmeBody.trimEnd(), ...chapters, disclaimer.trimStart()]
   .filter(Boolean)
-  .join('\n\n');
+  .join('\n\n')
+  .replace(/\[chapter-\d+\.md\]\(chapter-\d+\.md\)/g, '')
+  .replace(/\]\(chapter-\d+\.md#/g, '](#');
 
 await writeFile('full.md', output + '\n');
 console.log('full.md created');

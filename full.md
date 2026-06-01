@@ -47,158 +47,158 @@
 
 # Глава 0. Как работает AI-агент (How AI Agent Works)
 
-> Подробное содержание: [chapter-0.md](chapter-0.md)
+> Подробное содержание: 
 
 Агент работает в цикле (Master Loop), где каждая итерация потребляет токены и заполняет контекстное окно — конечную рабочую память. Ошибки работы с Cline — это следствие непонимания архитектуры: лимитов контекста, недетерминированности LLM и роли harness — детерминированного слоя (инструменты, permissions, hooks), оборачивающего модель. Глава даёт минимальную модель для осознанной работы.
 
 Материал главы охватывает:
 
-- [0.1. Master Loop — цикл агента](chapter-0.md#01-master-loop--цикл-агента)
-- [0.2. Context Window — окно контекста и его ограничения](chapter-0.md#02-context-window--окно-контекста-и-его-ограничения)
-- [0.3. Tool Orchestration — как агент вызывает инструменты](chapter-0.md#03-tool-orchestration--как-агент-вызывает-инструменты)
-- [0.4. Prompt Engineering vs Context Engineering](chapter-0.md#04-prompt-engineering-vs-context-engineering)
-- [0.5. Природа анти-паттернов](chapter-0.md#05-природа-анти-паттернов)
-- [0.6. Harness Architecture — тело вокруг мозга](chapter-0.md#06-harness-architecture--тело-вокруг-мозга)
+- [0.1. Master Loop — цикл агента](#01-master-loop--цикл-агента)
+- [0.2. Context Window — окно контекста и его ограничения](#02-context-window--окно-контекста-и-его-ограничения)
+- [0.3. Tool Orchestration — как агент вызывает инструменты](#03-tool-orchestration--как-агент-вызывает-инструменты)
+- [0.4. Prompt Engineering vs Context Engineering](#04-prompt-engineering-vs-context-engineering)
+- [0.5. Природа анти-паттернов](#05-природа-анти-паттернов)
+- [0.6. Harness Architecture — тело вокруг мозга](#06-harness-architecture--тело-вокруг-мозга)
 
 # Глава 1. Качество промптов (Prompt Quality)
 
-> Подробное содержание: [chapter-1.md](chapter-1.md)
+> Подробное содержание: 
 
 Глава разбирает 17 типичных ошибок промптинга — от ленивых запросов до непомерных задач — с конкретными примерами и пошаговыми рецептами. Вторая половина посвящена паттернам, работающим в продакшне: Chain-of-Thought, Few-Shot, ReAct, Prompt Chaining, Role Prompting с антипаттернами и кодом.
 
 Материал главы охватывает:
 
-- [1.1. Lazy Prompting — Ленивые промпты](chapter-1.md#11-lazy-prompting--ленивые-промпты)
-- [1.2. Caps Lock Rage — Ярость с Caps Lock](chapter-1.md#12-caps-lock-rage--ярость-с-caps-lock)
-- [1.3. Frustration Signals — Сигналы фрустрации](chapter-1.md#13-frustration-signals--сигналы-фрустрации)
-- [1.4. Hostile Language — Враждебный язык](chapter-1.md#14-hostile-language--враждебный-язык)
-- [1.5. Repeated Prompts — Повторяющиеся промпты](chapter-1.md#15-repeated-prompts--повторяющиеся-промпты)
-- [1.6. Low Constraint Usage — Мало ограничений в промптах](chapter-1.md#16-low-constraint-usage--мало-ограничений-в-промптах)
-- [1.7. Missing File Context — Нет контекста файлов](chapter-1.md#17-missing-file-context--нет-контекста-файлов)
-- [1.8. Excessive File Context — Избыточный контекст файлов](chapter-1.md#18-excessive-file-context--избыточный-контекст-файлов)
-- [1.9. Instruction Bloat — Раздутые инструкции](chapter-1.md#19-instruction-bloat--раздутые-инструкции)
-- [1.10. Verbose Model Output — Многословный вывод модели](chapter-1.md#110-verbose-model-output--многословный-вывод-модели)
-- [1.11. Verbose Prompts Without Compression — Многословные промпты без сжатия](chapter-1.md#111-verbose-prompts-without-compression--многословные-промпты-без-сжатия)
-- [1.12. No Spec-Driven Development — Нет спецификационной разработки](chapter-1.md#112-no-spec-driven-development--нет-спецификационной-разработки)
-- [1.13. Unstructured Task Starts — Неструктурированные начала задач](chapter-1.md#113-unstructured-task-starts--неструктурированные-начала-задач)
-- [1.14. Low Markdown Output Ratio — Мало markdown в выводе](chapter-1.md#114-low-markdown-output-ratio--мало-markdown-в-выводе)
-- [1.15. Agent Mode for Simple Questions — Агентный режим для простых вопросов](chapter-1.md#115-agent-mode-for-simple-questions--агентный-режим-для-простых-вопросов)
-- [1.16. Context Engineering Gaps — Пробелы в контекстной инженерии](chapter-1.md#116-context-engineering-gaps--пробелы-в-контекстной-инженерии)
-- [1.17. Oversized Tasks — Слишком большие задачи](chapter-1.md#117-oversized-tasks--слишком-большие-задачи)
-- [1.18. Паттерны промптинга, которые работают](chapter-1.md#118-паттерны-промптинга-которые-работают)
-  - [1.18.1. Chain-of-Thought](chapter-1.md#1181-chain-of-thought)
-  - [1.18.2. Few-Shot Prompting](chapter-1.md#1182-few-shot-prompting)
-  - [1.18.3. ReAct — рассуждение плюс действие](chapter-1.md#1183-react--рассуждение-плюс-действие)
-  - [1.18.4. Prompt Chaining — цепочки промптов](chapter-1.md#1184-prompt-chaining--цепочки-промптов)
-  - [1.18.5. Role Prompting — ролевые промпты](chapter-1.md#1185-role-prompting--ролевые-промпты)
-  - [1.18.6. Комбинации паттернов](chapter-1.md#1186-комбинации-паттернов)
-  - [1.18.7. Антипаттерны](chapter-1.md#1187-антипаттерны)
+- [1.1. Lazy Prompting — Ленивые промпты](#11-lazy-prompting--ленивые-промпты)
+- [1.2. Caps Lock Rage — Ярость с Caps Lock](#12-caps-lock-rage--ярость-с-caps-lock)
+- [1.3. Frustration Signals — Сигналы фрустрации](#13-frustration-signals--сигналы-фрустрации)
+- [1.4. Hostile Language — Враждебный язык](#14-hostile-language--враждебный-язык)
+- [1.5. Repeated Prompts — Повторяющиеся промпты](#15-repeated-prompts--повторяющиеся-промпты)
+- [1.6. Low Constraint Usage — Мало ограничений в промптах](#16-low-constraint-usage--мало-ограничений-в-промптах)
+- [1.7. Missing File Context — Нет контекста файлов](#17-missing-file-context--нет-контекста-файлов)
+- [1.8. Excessive File Context — Избыточный контекст файлов](#18-excessive-file-context--избыточный-контекст-файлов)
+- [1.9. Instruction Bloat — Раздутые инструкции](#19-instruction-bloat--раздутые-инструкции)
+- [1.10. Verbose Model Output — Многословный вывод модели](#110-verbose-model-output--многословный-вывод-модели)
+- [1.11. Verbose Prompts Without Compression — Многословные промпты без сжатия](#111-verbose-prompts-without-compression--многословные-промпты-без-сжатия)
+- [1.12. No Spec-Driven Development — Нет спецификационной разработки](#112-no-spec-driven-development--нет-спецификационной-разработки)
+- [1.13. Unstructured Task Starts — Неструктурированные начала задач](#113-unstructured-task-starts--неструктурированные-начала-задач)
+- [1.14. Low Markdown Output Ratio — Мало markdown в выводе](#114-low-markdown-output-ratio--мало-markdown-в-выводе)
+- [1.15. Agent Mode for Simple Questions — Агентный режим для простых вопросов](#115-agent-mode-for-simple-questions--агентный-режим-для-простых-вопросов)
+- [1.16. Context Engineering Gaps — Пробелы в контекстной инженерии](#116-context-engineering-gaps--пробелы-в-контекстной-инженерии)
+- [1.17. Oversized Tasks — Слишком большие задачи](#117-oversized-tasks--слишком-большие-задачи)
+- [1.18. Паттерны промптинга, которые работают](#118-паттерны-промптинга-которые-работают)
+  - [1.18.1. Chain-of-Thought](#1181-chain-of-thought)
+  - [1.18.2. Few-Shot Prompting](#1182-few-shot-prompting)
+  - [1.18.3. ReAct — рассуждение плюс действие](#1183-react--рассуждение-плюс-действие)
+  - [1.18.4. Prompt Chaining — цепочки промптов](#1184-prompt-chaining--цепочки-промптов)
+  - [1.18.5. Role Prompting — ролевые промпты](#1185-role-prompting--ролевые-промпты)
+  - [1.18.6. Комбинации паттернов](#1186-комбинации-паттернов)
+  - [1.18.7. Антипаттерны](#1187-антипаттерны)
 # Глава 2. Гигиена сессий (Session Hygiene)
 
-> Подробное содержание: [chapter-2.md](chapter-2.md)
+> Подробное содержание: 
 
 Десять типичных проблем организации сессий: от брошенных диалогов и мега-сессий до ночного кодирования, зацикленных петель и перегрузки одного агента. Каждый разбор — конкретные примеры, пошаговый рецепт и приёмы для удержания продуктивного, сфокусированного ритма работы.
 
 Материал главы охватывает:
 
-- [2.1. Abandoned Sessions — Брошенные сессии](chapter-2.md#21-abandoned-sessions--брошенные-сессии)
-- [2.2. Mega Sessions — Мега-сессии](chapter-2.md#22-mega-sessions--мега-сессии)
-- [2.3. Session Drift — Дрейф сессии](chapter-2.md#23-session-drift--дрейф-сессии)
-- [2.4. Excessive Cancellations — Высокий процент отмен](chapter-2.md#24-excessive-cancellations--высокий-процент-отмен)
-- [2.5. Broken Flow State — Нарушенное состояние потока](chapter-2.md#25-broken-flow-state--нарушенное-состояние-потока)
-- [2.6. Runaway Agent Loops — Зацикленные агентные петли](chapter-2.md#26-runaway-agent-loops--зацикленные-агентные-петли)
-- [2.7. Slow Responses — Медленные ответы](chapter-2.md#27-slow-responses--медленные-ответы)
-- [2.8. Late-Night Coding — Ночное кодирование](chapter-2.md#28-late-night-coding--ночное-кодирование)
-- [2.9. Over-Trusting Summaries — Чрезмерное доверие саммари](chapter-2.md#29-over-trusting-summaries--чрезмерное-доверие-саммари)
-- [2.10. Overloading a Single Agent — Перегрузка одного агента](chapter-2.md#210-overloading-a-single-agent--перегрузка-одного-агента)
+- [2.1. Abandoned Sessions — Брошенные сессии](#21-abandoned-sessions--брошенные-сессии)
+- [2.2. Mega Sessions — Мега-сессии](#22-mega-sessions--мега-сессии)
+- [2.3. Session Drift — Дрейф сессии](#23-session-drift--дрейф-сессии)
+- [2.4. Excessive Cancellations — Высокий процент отмен](#24-excessive-cancellations--высокий-процент-отмен)
+- [2.5. Broken Flow State — Нарушенное состояние потока](#25-broken-flow-state--нарушенное-состояние-потока)
+- [2.6. Runaway Agent Loops — Зацикленные агентные петли](#26-runaway-agent-loops--зацикленные-агентные-петли)
+- [2.7. Slow Responses — Медленные ответы](#27-slow-responses--медленные-ответы)
+- [2.8. Late-Night Coding — Ночное кодирование](#28-late-night-coding--ночное-кодирование)
+- [2.9. Over-Trusting Summaries — Чрезмерное доверие саммари](#29-over-trusting-summaries--чрезмерное-доверие-саммари)
+- [2.10. Overloading a Single Agent — Перегрузка одного агента](#210-overloading-a-single-agent--перегрузка-одного-агента)
 
 # Глава 3. Проверка кода (Code Review)
 
-> Подробное содержание: [chapter-3.md](chapter-3.md)
+> Подробное содержание: 
 
 7 антипаттернов: Speed Accept, Copy-Paste Blindness, Vibe Coding, Auto-Approved Commands, YOLO Mode, Unsandboxed Execution, Tunnel Vision. Все они ведут к техдолгу и ложному чувству контроля. 6 паттернов AI-ревью: многопроходное, атакующее, оценка уверенности, diff-aware vs codebase-aware, проблема автоматизационной предвзятости, разделение зон ответственности AI и человека.
 
 Материал главы охватывает:
 
-- [3.1. Speed Accept — Быстрое принятие без проверки](chapter-3.md#31-speed-accept--быстрое-принятие-без-проверки)
-- [3.2. Copy-Paste Blindness — Слепое копирование](chapter-3.md#32-copy-paste-blindness--слепое-копирование)
-- [3.3. Vibe Coding — Вайб-кодинг](chapter-3.md#33-vibe-coding--вайб-кодинг)
-- [3.4. Auto-Approved Terminal Commands — Авто-одобрение терминальных команд](chapter-3.md#34-auto-approved-terminal-commands--авто-одобрение-терминальных-команд)
-- [3.5. YOLO Mode — YOLO-режим](chapter-3.md#35-yolo-mode--yolo-режим)
-- [3.6. Unsandboxed Terminal Execution — Выполнение без песочницы](chapter-3.md#36-unsandboxed-terminal-execution--выполнение-без-песочницы)
-- [3.7. Single-Workspace Tunnel Vision — Туннельное зрение](chapter-3.md#37-single-workspace-tunnel-vision--туннельное-зрение)
-- [3.8. Паттерны AI-ревью кода](chapter-3.md#38-паттерны-ai-ревью-кода)
-  - [3.8.1. Многопроходное ревью](chapter-3.md#381-многопроходное-ревью)
-  - [3.8.2. Оценка уверенности](chapter-3.md#382-оценка-уверенности)
-  - [3.8.3. Атакующее ревью (adversarial review)](chapter-3.md#383-атакующее-ревью-adversarial-review)
-  - [3.8.4. Diff-aware vs codebase-aware ревью](chapter-3.md#384-diff-aware-vs-codebase-aware-ревью)
-  - [3.8.5. Проблема автоматизационной предвзятости](chapter-3.md#385-проблема-автоматизационной-предвзятости)
-  - [3.8.6. Что ревьюить с AI, что — самому](chapter-3.md#386-что-ревьюить-с-ai-что--самому)
+- [3.1. Speed Accept — Быстрое принятие без проверки](#31-speed-accept--быстрое-принятие-без-проверки)
+- [3.2. Copy-Paste Blindness — Слепое копирование](#32-copy-paste-blindness--слепое-копирование)
+- [3.3. Vibe Coding — Вайб-кодинг](#33-vibe-coding--вайб-кодинг)
+- [3.4. Auto-Approved Terminal Commands — Авто-одобрение терминальных команд](#34-auto-approved-terminal-commands--авто-одобрение-терминальных-команд)
+- [3.5. YOLO Mode — YOLO-режим](#35-yolo-mode--yolo-режим)
+- [3.6. Unsandboxed Terminal Execution — Выполнение без песочницы](#36-unsandboxed-terminal-execution--выполнение-без-песочницы)
+- [3.7. Single-Workspace Tunnel Vision — Туннельное зрение](#37-single-workspace-tunnel-vision--туннельное-зрение)
+- [3.8. Паттерны AI-ревью кода](#38-паттерны-ai-ревью-кода)
+  - [3.8.1. Многопроходное ревью](#381-многопроходное-ревью)
+  - [3.8.2. Оценка уверенности](#382-оценка-уверенности)
+  - [3.8.3. Атакующее ревью (adversarial review)](#383-атакующее-ревью-adversarial-review)
+  - [3.8.4. Diff-aware vs codebase-aware ревью](#384-diff-aware-vs-codebase-aware-ревью)
+  - [3.8.5. Проблема автоматизационной предвзятости](#385-проблема-автоматизационной-предвзятости)
+  - [3.8.6. Что ревьюить с AI, что — самому](#386-что-ревьюить-с-ai-что--самому)
 
 # Глава 4. Мастерство инструментов (Tool Mastery)
 
-> Подробное содержание: [chapter-4.md](chapter-4.md)
+> Подробное содержание: 
 
 14 антипаттернов: от отсутствия кастомных инструкций, slash-команд и навыков до незнания MCP-экосистемы и browser_action. Итог — переплата за мощные модели на задачах, решаемых лёгкими. Вторая половина главы — продвинутая оптимизация: разделение моделей для Plan/Act, управление reasoning effort, кэширование промптов и аудит MCP-инструментов.
 
 Материал главы охватывает:
 
-- [4.1. No Custom Instructions — Нет кастомных инструкций](chapter-4.md#41-no-custom-instructions--нет-кастомных-инструкций)
-- [4.2. No Slash Commands — Нет slash-команд](chapter-4.md#42-no-slash-commands--нет-slash-команд)
-- [4.3. No Skills Usage — Нет использования Skills](chapter-4.md#43-no-skills-usage--нет-использования-skills)
-- [4.4. Never Uses Plan Mode — Никогда не используется Plan Mode](chapter-4.md#44-never-uses-plan-mode--никогда-не-используется-plan-mode)
-- [4.5. Agentic Without Tools — Агентный режим без инструментов](chapter-4.md#45-agentic-without-tools--агентный-режим-без-инструментов)
-- [4.6. Model Overreliance — Чрезмерная зависимость от одной модели](chapter-4.md#46-model-overreliance--чрезмерная-зависимость-от-одной-модели)
-- [4.7. Auto Model Avoidance — Избегание раздельных моделей для режимов](chapter-4.md#47-auto-model-avoidance--избегание-раздельных-моделей-для-режимов)
-- [4.8. Premium Model Waste — Трата мощной модели на простые задачи](chapter-4.md#48-premium-model-waste--трата-мощной-модели-на-простые-задачи)
-- [4.9. Premium Model for Lookup Questions — Мощная модель для справочных вопросов](chapter-4.md#49-premium-model-for-lookup-questions--мощная-модель-для-справочных-вопросов)
-- [4.10. Reasoning Effort Overuse — Избыточное использование глубокого рассуждения](chapter-4.md#410-reasoning-effort-overuse--избыточное-использование-глубокого-рассуждения)
-- [4.11. Prompt Cache Starvation — Голодание кэша промптов](chapter-4.md#411-prompt-cache-starvation--голодание-кэша-промптов)
-- [4.12. Tool / MCP Bloat — Раздутый набор MCP-инструментов](chapter-4.md#412-tool--mcp-bloat--раздутый-набор-mcp-инструментов)
-- [4.13. No Browser Use — Нет использования браузера](chapter-4.md#413-no-browser-use--нет-использования-браузера)
-- [4.14. No MCP Ecosystem Awareness — Незнание экосистемы MCP](chapter-4.md#414-no-mcp-ecosystem-awareness--незнание-экосистемы-mcp)
-- [Общий контекст правил главы](chapter-4.md#общий-контекст-правил-главы)
+- [4.1. No Custom Instructions — Нет кастомных инструкций](#41-no-custom-instructions--нет-кастомных-инструкций)
+- [4.2. No Slash Commands — Нет slash-команд](#42-no-slash-commands--нет-slash-команд)
+- [4.3. No Skills Usage — Нет использования Skills](#43-no-skills-usage--нет-использования-skills)
+- [4.4. Never Uses Plan Mode — Никогда не используется Plan Mode](#44-never-uses-plan-mode--никогда-не-используется-plan-mode)
+- [4.5. Agentic Without Tools — Агентный режим без инструментов](#45-agentic-without-tools--агентный-режим-без-инструментов)
+- [4.6. Model Overreliance — Чрезмерная зависимость от одной модели](#46-model-overreliance--чрезмерная-зависимость-от-одной-модели)
+- [4.7. Auto Model Avoidance — Избегание раздельных моделей для режимов](#47-auto-model-avoidance--избегание-раздельных-моделей-для-режимов)
+- [4.8. Premium Model Waste — Трата мощной модели на простые задачи](#48-premium-model-waste--трата-мощной-модели-на-простые-задачи)
+- [4.9. Premium Model for Lookup Questions — Мощная модель для справочных вопросов](#49-premium-model-for-lookup-questions--мощная-модель-для-справочных-вопросов)
+- [4.10. Reasoning Effort Overuse — Избыточное использование глубокого рассуждения](#410-reasoning-effort-overuse--избыточное-использование-глубокого-рассуждения)
+- [4.11. Prompt Cache Starvation — Голодание кэша промптов](#411-prompt-cache-starvation--голодание-кэша-промптов)
+- [4.12. Tool / MCP Bloat — Раздутый набор MCP-инструментов](#412-tool--mcp-bloat--раздутый-набор-mcp-инструментов)
+- [4.13. No Browser Use — Нет использования браузера](#413-no-browser-use--нет-использования-браузера)
+- [4.14. No MCP Ecosystem Awareness — Незнание экосистемы MCP](#414-no-mcp-ecosystem-awareness--незнание-экосистемы-mcp)
+- [Общий контекст правил главы](#общий-контекст-правил-главы)
 
 # Глава 5. Контекст рабочего пространства (Workspace Context)
 
-> Подробное содержание: [chapter-5.md](chapter-5.md)
+> Подробное содержание: 
 
 Десять механизмов контекста: правила (условные/универсальные), навыки с прогрессивным раскрытием, агенты-профили, workflows, хуки жизненного цикла. Раздутый контекст жжёт токены и размывает намерения. Вторая половина — Memory Bank, .clineignore, devcontainer, permission-слои, best practices и шаблоны.
 
 Материал главы охватывает:
 
-- [5.1. Правила (Rules)](chapter-5.md#51-правила-rules)
-- [5.2. Навыки (Skills)](chapter-5.md#52-навыки-skills)
-- [5.3. Агенты (Agents)](chapter-5.md#53-агенты-agents)
-- [5.4. Workflows и кастомные slash-команды](chapter-5.md#54-workflows-и-кастомные-slash-команды)
-- [5.5. Хуки (Hooks)](chapter-5.md#55-хуки-hooks)
-  - [5.5.5. Notification хук — уведомления о событиях агента](chapter-5.md#555-notification-хук--уведомления-о-событиях-агента)
-- [5.6. Банк памяти (Memory Bank)](chapter-5.md#56-банк-памяти-memory-bank)
-- [5.7. Игнорирование файлов: .clineignore](chapter-5.md#57-игнорирование-файлов-clineignore)
-- [5.8. Dev Container — изолированная среда для агентного AI](chapter-5.md#58-dev-container--изолированная-среда-для-агентного-ai)
-- [5.9. Рекомендации по организации контекста](chapter-5.md#59-рекомендации-по-организации-контекста)
-- [5.10. Конфигурация разрешений (Permissions)](chapter-5.md#510-конфигурация-разрешений-permissions)
+- [5.1. Правила (Rules)](#51-правила-rules)
+- [5.2. Навыки (Skills)](#52-навыки-skills)
+- [5.3. Агенты (Agents)](#53-агенты-agents)
+- [5.4. Workflows и кастомные slash-команды](#54-workflows-и-кастомные-slash-команды)
+- [5.5. Хуки (Hooks)](#55-хуки-hooks)
+  - [5.5.5. Notification хук — уведомления о событиях агента](#555-notification-хук--уведомления-о-событиях-агента)
+- [5.6. Банк памяти (Memory Bank)](#56-банк-памяти-memory-bank)
+- [5.7. Игнорирование файлов: .clineignore](#57-игнорирование-файлов-clineignore)
+- [5.8. Dev Container — изолированная среда для агентного AI](#58-dev-container--изолированная-среда-для-агентного-ai)
+- [5.9. Рекомендации по организации контекста](#59-рекомендации-по-организации-контекста)
+- [5.10. Конфигурация разрешений (Permissions)](#510-конфигурация-разрешений-permissions)
 
 # Глава 6. Метрики и аналитика (Metrics and Analytics)
 
-> Подробное содержание: [chapter-6.md](chapter-6.md)
+> Подробное содержание: 
 
 Восемь категорий метрик: от активности по часам и объёма кода до потребления токенов и покрытия парсеров. Плохая аналитика скрывает перерасход и маскирует неэффективные паттерны, превращая работу в чёрный ящик. Вторая половина — методики самооценки: оптимизация через автоматизацию повторений, управление контекстным окном, баланс работы и жизни по данным истории, оценка Flow State — с антипаттернами, чеклистами и числовыми ориентирами.
 
 Материал главы охватывает:
 
-- [6.1. Активность и распределение по часам](chapter-6.md#61-активность-и-распределение-по-часам)
-- [6.2. Объём сгенерированного кода (Code Production)](chapter-6.md#62-объём-сгенерированного-кода-code-production)
-- [6.3. Потребление токенов и попадания в кэш](chapter-6.md#63-потребление-токенов-и-попадания-в-кэш)
-- [6.4. Покрытие парсеров (Parser Coverage)](chapter-6.md#64-покрытие-парсеров-parser-coverage)
-- [6.5. Оптимизация рабочего процесса (Workflow Optimization)](chapter-6.md#65-оптимизация-рабочего-процесса-workflow-optimization)
-- [6.6. Управление контекстом (Context Management)](chapter-6.md#66-управление-контекстом-context-management)
-- [6.7. Баланс работы и жизни (Work-Life Balance)](chapter-6.md#67-баланс-работы-и-жизни-work-life-balance)
-- [6.8. Состояние потока (Flow State) и его оценки](chapter-6.md#68-состояние-потока-flow-state-и-его-оценки)
+- [6.1. Активность и распределение по часам](#61-активность-и-распределение-по-часам)
+- [6.2. Объём сгенерированного кода (Code Production)](#62-объём-сгенерированного-кода-code-production)
+- [6.3. Потребление токенов и попадания в кэш](#63-потребление-токенов-и-попадания-в-кэш)
+- [6.4. Покрытие парсеров (Parser Coverage)](#64-покрытие-парсеров-parser-coverage)
+- [6.5. Оптимизация рабочего процесса (Workflow Optimization)](#65-оптимизация-рабочего-процесса-workflow-optimization)
+- [6.6. Управление контекстом (Context Management)](#66-управление-контекстом-context-management)
+- [6.7. Баланс работы и жизни (Work-Life Balance)](#67-баланс-работы-и-жизни-work-life-balance)
+- [6.8. Состояние потока (Flow State) и его оценки](#68-состояние-потока-flow-state-и-его-оценки)
 
 # Глава 7. Автоматизация и масштабирование (Automation and Scaling)
 
-> Подробное содержание: [chapter-7.md](chapter-7.md)
+> Подробное содержание: 
 
 Шесть режимов, убирающих человека из цикла: Headless (CLI/CI, §7.1), Scheduled Agents (задачи по cron, §7.2), Multi-Agent Teams (координатор + специалисты, §7.3), Kanban (веб-доска с изолированными worktree, §7.4), Chat Connectors (Telegram/Slack, §7.5) и Autonomous Cycles (фоновый конвейер из todo-списка, §7.6). Без них ручное управление упирается в потолок одного разработчика.
 
@@ -208,80 +208,80 @@
 
 Материал главы охватывает:
 
-- [7.1. Headless режим и CI/CD интеграция](chapter-7.md#71-headless-режим-и-cicd-интеграция)
-- [7.2. Scheduled Agents — запуск по расписанию](chapter-7.md#72-scheduled-agents--запуск-по-расписанию)
-- [7.3. Multi-Agent Teams — координация агентов](chapter-7.md#73-multi-agent-teams--координация-агентов)
-- [7.4. Kanban — параллельный запуск с изолированными worktrees](chapter-7.md#74-kanban--параллельный-запуск-с-изолированными-worktrees)
-- [7.5. Chat Connectors — агент в мессенджерах](chapter-7.md#75-chat-connectors--агент-в-мессенджерах)
-- [7.6. Автономные циклы (Autonomous Cycles)](chapter-7.md#76-автономные-циклы-autonomous-cycles)
-  - [7.6.1. Task-driven autonomous workflow](chapter-7.md#761-task-driven-autonomous-workflow)
-  - [7.6.2. Управление контекстом длинных сессий](chapter-7.md#762-управление-контекстом-длинных-сессий)
-  - [7.6.3. Изоляция контекста — стратегии](chapter-7.md#763-изоляция-контекста--стратегии)
-  - [7.6.4. Параллельные worktrees](chapter-7.md#764-параллельные-worktrees)
-  - [7.6.5. Notification hooks](chapter-7.md#765-notification-hooks)
-  - [7.6.6. Типичные ошибки автономных циклов](chapter-7.md#766-типичные-ошибки-автономных-циклов)
-- [Общий принцип главы](chapter-7.md#общий-принцип-главы)
+- [7.1. Headless режим и CI/CD интеграция](#71-headless-режим-и-cicd-интеграция)
+- [7.2. Scheduled Agents — запуск по расписанию](#72-scheduled-agents--запуск-по-расписанию)
+- [7.3. Multi-Agent Teams — координация агентов](#73-multi-agent-teams--координация-агентов)
+- [7.4. Kanban — параллельный запуск с изолированными worktrees](#74-kanban--параллельный-запуск-с-изолированными-worktrees)
+- [7.5. Chat Connectors — агент в мессенджерах](#75-chat-connectors--агент-в-мессенджерах)
+- [7.6. Автономные циклы (Autonomous Cycles)](#76-автономные-циклы-autonomous-cycles)
+  - [7.6.1. Task-driven autonomous workflow](#761-task-driven-autonomous-workflow)
+  - [7.6.2. Управление контекстом длинных сессий](#762-управление-контекстом-длинных-сессий)
+  - [7.6.3. Изоляция контекста — стратегии](#763-изоляция-контекста--стратегии)
+  - [7.6.4. Параллельные worktrees](#764-параллельные-worktrees)
+  - [7.6.5. Notification hooks](#765-notification-hooks)
+  - [7.6.6. Типичные ошибки автономных циклов](#766-типичные-ошибки-автономных-циклов)
+- [Общий принцип главы](#общий-принцип-главы)
 
 # Глава 8. Безопасность (Security)
 
-> Подробное содержание: [chapter-8.md](chapter-8.md)
+> Подробное содержание: 
 
 Шесть направлений защиты: модель угроз, prompt injection, ветинг MCP, управление секретами, sandbox-изоляция и аудит конфигурации. Prompt injection и недоверенный MCP — скрытый вектор атаки без взлома учётки. Практическая часть: многоуровневая защита секретов, devcontainer-изоляция, Velocity Governor, готовые скрипты аудита и чеклист безопасности.
 
 Материал главы охватывает:
 
-- [8.1. Threat Model — модель угроз для AI-агентов](chapter-8.md#81-threat-model--модель-угроз-для-ai-агентов)
-- [8.2. Prompt Injection — инъекции в промпты](chapter-8.md#82-prompt-injection--инъекции-в-промпты)
-- [8.3. MCP Security — ветинг MCP-серверов](chapter-8.md#83-mcp-security--ветинг-mcp-серверов)
-- [8.4. Secrets Management — управление секретами](chapter-8.md#84-secrets-management--управление-секретами)
-- [8.5. Sandbox Isolation — изоляция выполнения](chapter-8.md#85-sandbox-isolation--изоляция-выполнения)
-- [8.6. Audit Workflow — аудит конфигурации](chapter-8.md#86-audit-workflow--аудит-конфигурации)
+- [8.1. Threat Model — модель угроз для AI-агентов](#81-threat-model--модель-угроз-для-ai-агентов)
+- [8.2. Prompt Injection — инъекции в промпты](#82-prompt-injection--инъекции-в-промпты)
+- [8.3. MCP Security — ветинг MCP-серверов](#83-mcp-security--ветинг-mcp-серверов)
+- [8.4. Secrets Management — управление секретами](#84-secrets-management--управление-секретами)
+- [8.5. Sandbox Isolation — изоляция выполнения](#85-sandbox-isolation--изоляция-выполнения)
+- [8.6. Audit Workflow — аудит конфигурации](#86-audit-workflow--аудит-конфигурации)
 
 
 # Глава 9. Методологии разработки (Development Methodologies)
 
-> Подробное содержание: [chapter-9.md](chapter-9.md)
+> Подробное содержание: 
 
 TDD (тест до кода), SDD (спецификация как контракт) и BDD (Gherkin-сценарии) — три методологии для AI-агентов. Без методологии агент генерирует техдолг наравне с качественным кодом: он не чувствует сопротивления плохому коду. Вторая половина главы — выбор подхода по типу задачи, Verification Loops, PRD Quality Checklist и готовые шаблоны.
 
 Материал главы охватывает:
 
-- [9.1. TDD — Test-Driven Development с агентом](chapter-9.md#91-tdd--test-driven-development-с-агентом)
-- [9.2. SDD — Specification-Driven Development](chapter-9.md#92-sdd--specification-driven-development)
-- [9.3. BDD — Behavior-Driven Development](chapter-9.md#93-bdd--behavior-driven-development)
-- [9.4. Выбор методологии по типу задачи](chapter-9.md#94-выбор-методологии-по-типу-задачи)
+- [9.1. TDD — Test-Driven Development с агентом](#91-tdd--test-driven-development-с-агентом)
+- [9.2. SDD — Specification-Driven Development](#92-sdd--specification-driven-development)
+- [9.3. BDD — Behavior-Driven Development](#93-bdd--behavior-driven-development)
+- [9.4. Выбор методологии по типу задачи](#94-выбор-методологии-по-типу-задачи)
 
 # Глава 10. Командная работа и регламентация (Teamwork and Governance)
 
-> Подробное содержание: [chapter-10.md](chapter-10.md)
+> Подробное содержание: 
 
 Командная регламентация AI-агентов: онбординг, shared rules, guardrail tiers (Starter–Regulated), AI Usage Charter и аудит. Масштаб меняет природу рисков — личная ошибка становится командным инцидентом. Вторая половина — политики, CI/CD-гейты, config-репозиторий и фазовое внедрение для команд от 2 до 100 разработчиков.
 
 Материал главы охватывает:
 
-- [Ключевой принцип](chapter-10.md#ключевой-принцип)
-- [Почему командное внедрение отличается от индивидуального](chapter-10.md#почему-командное-внедрение-отличается-от-индивидуального)
-- [10.1. Onboarding команды](chapter-10.md#101-onboarding-команды)
-- [10.2. Shared Rules и политики](chapter-10.md#102-shared-rules-и-политики)
+- [Ключевой принцип](#ключевой-принцип)
+- [Почему командное внедрение отличается от индивидуального](#почему-командное-внедрение-отличается-от-индивидуального)
+- [10.1. Onboarding команды](#101-onboarding-команды)
+- [10.2. Shared Rules и политики](#102-shared-rules-и-политики)
 
 # Глава 11. Отладка и диагностика (Debugging and Diagnostics)
 
-> Подробное содержание: [chapter-11.md](chapter-11.md)
+> Подробное содержание: 
 
 Пять уровней диагностики: `cline doctor` (установка), context bar + Dumb Zone (сессия), checkpoints (откат), debug/verify skills (код), browser_action (фронтенд). Три корневые причины отказов: насыщение контекста, недетерминированность LLM, конфигурация окружения. Вторая половина — типовые сценарии, diagnostic flags, логи и управление фоновыми процессами.
 
 Материал главы охватывает:
 
-- [11.1. Диагностический инструментарий — обзор](chapter-11.md#111-диагностический-инструментарий--обзор)
-- [11.2. cline doctor — проверка здоровья установки](chapter-11.md#112-cline-doctor--проверка-здоровья-установки)
-- [11.3. Визуализация контекста и Dumb Zone](chapter-11.md#113-визуализация-контекста-и-dumb-zone)
-- [11.4. Checkpoints — откат состояния](chapter-11.md#114-checkpoints--откат-состояния)
-- [11.5. Управление фоновыми процессами](chapter-11.md#115-управление-фоновыми-процессами)
-- [11.6. Debug и Verify skills — автоматическая диагностика](chapter-11.md#116-debug-и-verify-skills--автоматическая-диагностика)
-- [11.7. Недетерминированность LLM — почему агент ведёт себя непредсказуемо](chapter-11.md#117-недетерминированность-llm--почему-агент-ведёт-себя-непредсказуемо)
-- [11.8. Типичные сценарии и решения](chapter-11.md#118-типичные-сценарии-и-решения)
-- [11.9. Диагностические флаги и логи](chapter-11.md#119-диагностические-флаги-и-логи)
-- [11.10. Инструменты браузерной отладки](chapter-11.md#1110-инструменты-браузерной-отладки)
+- [11.1. Диагностический инструментарий — обзор](#111-диагностический-инструментарий--обзор)
+- [11.2. cline doctor — проверка здоровья установки](#112-cline-doctor--проверка-здоровья-установки)
+- [11.3. Визуализация контекста и Dumb Zone](#113-визуализация-контекста-и-dumb-zone)
+- [11.4. Checkpoints — откат состояния](#114-checkpoints--откат-состояния)
+- [11.5. Управление фоновыми процессами](#115-управление-фоновыми-процессами)
+- [11.6. Debug и Verify skills — автоматическая диагностика](#116-debug-и-verify-skills--автоматическая-диагностика)
+- [11.7. Недетерминированность LLM — почему агент ведёт себя непредсказуемо](#117-недетерминированность-llm--почему-агент-ведёт-себя-непредсказуемо)
+- [11.8. Типичные сценарии и решения](#118-типичные-сценарии-и-решения)
+- [11.9. Диагностические флаги и логи](#119-диагностические-флаги-и-логи)
+- [11.10. Инструменты браузерной отладки](#1110-инструменты-браузерной-отладки)
 
 ---
 
