@@ -17,5 +17,5 @@ const output = [readmeBody.trimEnd(), ...chapters, disclaimer.trimStart()]
   .replace(/\[chapter-\d+\.md\]\(chapter-\d+\.md\)/g, '')
   .replace(/\]\(chapter-\d+\.md#/g, '](#');
 
-await writeFile('full.md', output + '\n');
-console.log('full.md created');
+await writeFile(`agentic-engineering-full-${Date.now()}.md`, output + '\n');
+console.log(`agentic-engineering-full-${Date.now()}.md created`);
