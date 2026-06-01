@@ -296,32 +296,32 @@ cline --retries 5 "сложная задача"
 **1. Harness-enforced ограничения вместо advisory промптов**
 
 ```bash
-# Антипаттерн: advisory промпт в .clinerules
-"NEVER modify package.json directly"
-
-# Правильно: harness-enforced через PreToolUse hook
-# .clinerules/hooks/PreToolUse
-#!/usr/bin/env bash
-input=$(cat)
-tool_name=$(echo "$input" | jq -r '.preToolUse.toolName')
-path=$(echo "$input" | jq -r '.preToolUse.parameters.path // ""')
-
-if [[ "$path" == *"package.json"* ]]; then
-  echo '{"cancel": true, "errorMessage": "Policy: Use npm commands to modify package.json"}'
-  exit 0
-fi
+# Антипаттерн: advisory промпт в .clinerules  
+"NEVER modify package.json directly"  
+  
+# Правильно: harness-enforced через PreToolUse hook  
+# .clinerules/hooks/PreToolUse  
+#!/usr/bin/env bash  
+input=$(cat)  
+tool_name=$(echo "$input" | jq -r '.preToolUse.toolName')  
+path=$(echo "$input" | jq -r '.preToolUse.parameters.path // ""')  
+  
+if [[ "$path" == *"package.json"* ]]; then  
+  echo '{"cancel": true, "errorMessage": "Policy: Use npm commands to modify package.json"}'  
+  exit 0  
+fi  
 echo '{"cancel": false}'
 ```
 
 **2. ToolPolicies вместо advisory промптов (SDK)**
 
 ```typescript
-await cline.start({
-  prompt: "Audit this repo",
-  toolPolicies: {
-    run_commands: { autoApprove: false },
-    editor: { autoApprove: false },
-  },
+await cline.start({  
+  prompt: "Audit this repo",  
+  toolPolicies: {  
+    run_commands: { autoApprove: false },  
+    editor: { autoApprove: false },  
+  },  
 })
 ```
 

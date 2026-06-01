@@ -487,8 +487,9 @@ git diff | cline --thinking high "review for security issues"
 **Plan Mode как встроенный CoT.** Самый мощный CoT-паттерн в Cline — это переключение в Plan Mode перед действием. В Plan Mode Cline читает кодовую базу, задаёт уточняющие вопросы и строит план — не трогая ни одного файла. Это не просто «думать вслух», это думать с доступом к реальному контексту:
 
 ```bash
-# Plan Mode в CLI — спроектировать без изменений
-cline -p "design the migration plan for adding multi-tenancy"
+# Интерактивный режим (рекомендуется)  
+cline -i "design the migration plan for adding multi-tenancy"  
+# После завершения планирования переключитесь в Act mode в TUI 
 
 # Потом выполнить с полным контекстом плана
 cline "implement the multi-tenancy migration"
@@ -557,14 +558,10 @@ Act Mode:
 
 Ключевое свойство ReAct — отлаживаемость. Вы видите, почему Cline принял каждое решение. Если что-то пошло не так, вы видите, где именно сломалась цепочка рассуждений.
 
-Для агентных сценариев в CLI используйте `use_subagents` — параллельный ReAct для широкого исследования:
+Для агентных сценариев в CLI Cline может использовать use_subagents — параллельный ReAct для широкого исследования. Агент сам решает, когда вызывать этот tool:
 
 ```bash
-cline "Investigate the performance regression in the API:
-  - subagent 1: analyze recent commits touching the query layer
-  - subagent 2: check if indexes were changed in migrations
-  - subagent 3: look for N+1 patterns in the affected endpoints
-  Synthesize findings and propose a fix."
+cline "Investigate the performance regression in the API. Analyze recent commits touching the query layer, check if indexes were changed in migrations, and look for N+1 patterns in the affected endpoints. Then synthesize findings and propose a fix."
 ```
 
 ---
@@ -643,7 +640,7 @@ echo "$PLAN" | cline --config ~/.cline-sonnet \
 Для одноразовых задач используйте `--system-prompt` в CLI:
 
 ```bash
-cline --system-prompt "You are a security auditor. Focus only on vulnerabilities." \
+cline -s "You are a security auditor. Focus only on vulnerabilities." \  
   "review this authentication code"
 ```
 
