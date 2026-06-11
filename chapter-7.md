@@ -761,7 +761,7 @@ cline schedule create "Daily standup" \
 | Коммит | `git commit` через инструмент | Фиксирует результат |
 | Компрессия | `/smol` или Auto Compact | Сжимает историю, освобождает контекст |
 
-**Workflow `/next-task`:** Создайте `.clinerules/workflows/next-task.md`:
+**Workflow `/next-task`:** Создайте `.cline/rules/workflows/next-task.md`:
 
 ```markdown
 ---
@@ -785,7 +785,7 @@ Stop after completing one task. Do not proceed to the next task.
 
 ```bash
 while grep -q '\- \[ \]' .cline/todo.md; do
-  cline --auto-approve true "$(cat .clinerules/workflows/next-task.md)"
+  cline --auto-approve true "$(cat .cline/rules/workflows/next-task.md)"
   sleep 2
 done
 ```
@@ -889,11 +889,11 @@ cline --zen --auto-approve true "run full test suite and fix all failures"
 
 ### 7.6.5. Notification hooks
 
-Хук `Notification` срабатывает при `user_attention` (агент ждёт ввода) и `task_complete` (задача завершена). Создайте файл `.clinerules/hooks/Notification` (без расширения):
+Хук `Notification` срабатывает при `user_attention` (агент ждёт ввода) и `task_complete` (задача завершена). Создайте файл `.cline/rules/hooks/Notification` (без расширения):
 
 ```bash
 #!/usr/bin/env bash
-# .clinerules/hooks/Notification
+# .cline/rules/hooks/Notification
 # Notification хуки — observation-only: cancel и contextModification игнорируются
 
 INPUT=$(cat)

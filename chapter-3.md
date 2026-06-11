@@ -185,8 +185,8 @@ Show me where.
 
 ```bash
 #!/usr/bin/env bash
-# .clinerules/hooks/PreToolUse
-# chmod +x .clinerules/hooks/PreToolUse
+# .cline/rules/hooks/PreToolUse
+# chmod +x .cline/rules/hooks/PreToolUse
 
 input=$(cat)
 tool_name=$(echo "$input" | jq -r '.preToolUse.toolName')
@@ -327,7 +327,7 @@ git diff | cline "Review ONLY for style: naming, formatting, comment quality."
 
 Порядок важен. Проблемы безопасности из первого прохода могут заблокировать весь PR — нет смысла ревьюить стиль, если в коде уязвимость.
 
-Для регулярного использования оформите это как `.clinerules`-воркфлоу. Cline поставляется с примером в `.clinerules/workflows/pr-review.md` — возьмите его за основу и добавьте многопроходную логику.
+Для регулярного использования оформите это как `.cline/rules`-воркфлоу. Cline поставляется с примером в `.cline/rules/workflows/pr-review.md` — возьмите его за основу и добавьте многопроходную логику.
 
 ---
 

